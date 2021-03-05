@@ -33,7 +33,7 @@ namespace SpatialFocus.EFLazyLoading.Fody
 
 				if (!hasLazyLoaderConstructor)
 				{
-					foreach (MethodDefinition methodDefinition in typeDefinition.GetConstructors())
+					foreach (MethodDefinition methodDefinition in typeDefinition.GetConstructors().ToList())
 					{
 						MethodDefinition method = new MethodDefinition(methodDefinition.Name, methodDefinition.Attributes, ModuleDefinition.TypeSystem.Void);
 
