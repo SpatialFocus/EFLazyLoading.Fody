@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Fody" Version="6.4.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<WeaverFiles Include="$(SolutionDir)src\SpatialFocus.EFLazyLoading.Fody\bin\$(Configuration)\netstandard2.0\SpatialFocus.EFLazyLoading.Fody.dll" />
+	</ItemGroup>
+
+</Project>
