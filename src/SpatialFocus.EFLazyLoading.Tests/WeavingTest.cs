@@ -4,6 +4,7 @@
 
 namespace SpatialFocus.EFLazyLoading.Tests
 {
+	using System;
 	using global::Fody;
 	using SpatialFocus.EFLazyLoading.Fody;
 	using SpatialFocus.EFLazyLoading.Tests.Assembly;
@@ -18,13 +19,21 @@ namespace SpatialFocus.EFLazyLoading.Tests
 		{
 			ModuleWeaver weavingTask = new ModuleWeaver();
 
-			WeavingTest.TestResult = weavingTask.ExecuteTestRun($"{typeof(MyClass).Namespace}.dll", ignoreCodes: new[] { "0x80131869" });
+			try
+			{
+				WeavingTest.TestResult = weavingTask.ExecuteTestRun($"{typeof(Customer).Namespace}.dll", ignoreCodes: new[] { "0x80131869" });
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 		}
 
 		[Fact]
 		public void CanCreateInstance()
 		{
-			dynamic instance = TestHelpers.CreateInstance<MyClass>(WeavingTest.TestResult.Assembly);
+			dynamic instance = TestHelpers.CreateInstance<Customer>(WeavingTest.TestResult.Assembly);
 		}
 	}
 }
