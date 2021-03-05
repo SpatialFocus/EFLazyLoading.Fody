@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+		<Version>1.0.0</Version>
+		<Title>Title</Title>
+		<Authors>Dresel,pergerch</Authors>
+		<Company>SpatialFocus</Company>
+		<Description>Description</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>PackageTags</PackageTags>
+		<PackageOutputPath>$(SolutionDir)\.nuget</PackageOutputPath>
+		<PackageProjectUrl>https://github.com/SpatialFocus/EFLazyLoading.Fody</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageIconUrl>https://raw.githubusercontent.com/SpatialFocus/EFLazyLoading.Fody/master/docs/icon.png</PackageIconUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/SpatialFocus/EFLazyLoading.Fody.git</RepositoryUrl>
+
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Fody" Version="6.3.0" PrivateAssets="none" />
+		<PackageReference Include="FodyPackaging" Version="6.3.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\docs\icon.png" Pack="true" PackagePath="\" Visible="false" />
+	</ItemGroup>
+</Project>
