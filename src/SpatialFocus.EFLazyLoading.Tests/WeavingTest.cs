@@ -21,7 +21,8 @@ namespace SpatialFocus.EFLazyLoading.Tests
 
 			try
 			{
-				WeavingTest.TestResult = weavingTask.ExecuteTestRun($"{typeof(Customer).Namespace}.dll", ignoreCodes: new[] { "0x80131869" });
+				WeavingTest.TestResult =
+					weavingTask.ExecuteTestRun($"{typeof(Customer).Namespace}.dll", ignoreCodes: new[] { "0x80131869" });
 			}
 			catch (Exception e)
 			{
@@ -33,7 +34,7 @@ namespace SpatialFocus.EFLazyLoading.Tests
 		[Fact]
 		public void CanCreateInstance()
 		{
-			dynamic instance = TestHelpers.CreateInstance<Customer>(WeavingTest.TestResult.Assembly);
+			dynamic instance = TestHelpers.CreateInstance<Customer>(WeavingTest.TestResult.Assembly, "Test");
 		}
 	}
 }

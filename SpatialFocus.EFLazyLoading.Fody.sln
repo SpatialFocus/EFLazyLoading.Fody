@@ -20,9 +20,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.EFLazyLoading"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.EFLazyLoading.Fody", "src\SpatialFocus.EFLazyLoading.Fody\SpatialFocus.EFLazyLoading.Fody.csproj", "{2239D06D-D6DA-4ABD-8200-12F8568C8029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialFocus.EFLazyLoading.Tests", "src\SpatialFocus.EFLazyLoading.Tests\SpatialFocus.EFLazyLoading.Tests.csproj", "{5F57DFB7-3484-4F06-8933-3CA798A2F772}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.EFLazyLoading.Tests", "src\SpatialFocus.EFLazyLoading.Tests\SpatialFocus.EFLazyLoading.Tests.csproj", "{5F57DFB7-3484-4F06-8933-3CA798A2F772}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialFocus.EFLazyLoading.Tests.Assembly", "src\SpatialFocus.EFLazyLoading.Tests.Assembly\SpatialFocus.EFLazyLoading.Tests.Assembly.csproj", "{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.EFLazyLoading.Tests.Assembly", "src\SpatialFocus.EFLazyLoading.Tests.Assembly\SpatialFocus.EFLazyLoading.Tests.Assembly.csproj", "{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialFocus.EFLazyLoading.Sample", "src\SpatialFocus.EFLazyLoading.Sample\SpatialFocus.EFLazyLoading.Sample.csproj", "{604A21F0-71C9-47E5-ADB7-61BEA710C632}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialFocus.EFLazyLoading.Sample.Data", "src\SpatialFocus.EFLazyLoading.Sample.Data\SpatialFocus.EFLazyLoading.Sample.Data.csproj", "{48500C63-21E7-448E-80BE-86DD8357CF18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +50,14 @@ Global
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{604A21F0-71C9-47E5-ADB7-61BEA710C632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{604A21F0-71C9-47E5-ADB7-61BEA710C632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{604A21F0-71C9-47E5-ADB7-61BEA710C632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{604A21F0-71C9-47E5-ADB7-61BEA710C632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48500C63-21E7-448E-80BE-86DD8357CF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48500C63-21E7-448E-80BE-86DD8357CF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48500C63-21E7-448E-80BE-86DD8357CF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48500C63-21E7-448E-80BE-86DD8357CF18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +67,8 @@ Global
 		{2239D06D-D6DA-4ABD-8200-12F8568C8029} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
 		{5F57DFB7-3484-4F06-8933-3CA798A2F772} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
+		{604A21F0-71C9-47E5-ADB7-61BEA710C632} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
+		{48500C63-21E7-448E-80BE-86DD8357CF18} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77bbd221-c189-4fdc-8125-5773860799c0}
