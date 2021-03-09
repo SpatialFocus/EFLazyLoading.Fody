@@ -25,7 +25,7 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         # Filepath of the project to be packaged, relative to root of repository
-        PROJECT_FILE_PATH: src/SpatialFocus.EFLazyLoading.Fody/SpatialFocus.EFLazyLoading.Fody.csproj
+        PROJECT_FILE_PATH: src/SpatialFocus.EFLazyLoading/SpatialFocus.EFLazyLoading.csproj
         # NuGet package id, used for version detection & defaults to project name
         PACKAGE_NAME: SpatialFocus.EFLazyLoading.Fody
         # API key to authenticate with NuGet server
