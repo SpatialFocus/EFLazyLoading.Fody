@@ -2,13 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
-		<Version>1.0.0</Version>
-		<Title>Title</Title>
+		<Version>1.0.0-rc1</Version>
+		<Title>An EF Lazy Loading Fody plugin</Title>
 		<Authors>Dresel,pergerch</Authors>
 		<Company>SpatialFocus</Company>
-		<Description>Description</Description>
+		<Description>A Fody plugin to inject EF lazy-loader and load statements for readonly collections.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageTags>PackageTags</PackageTags>
+		<PackageTags>ILWeaving, Fody, Cecil, Lazy Loading, EF</PackageTags>
 		<PackageOutputPath>$(SolutionDir)\.nuget</PackageOutputPath>
 		<PackageProjectUrl>https://github.com/SpatialFocus/EFLazyLoading.Fody</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
@@ -29,7 +29,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Fody" Version="6.4.0" PrivateAssets="none" />
-		<PackageReference Include="FodyPackaging" Version="6.3.0" PrivateAssets="All" />
+		<PackageReference Include="FodyPackaging" Version="6.4.0" PrivateAssets="All" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
 	</ItemGroup>
 
