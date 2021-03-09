@@ -25,8 +25,15 @@ namespace SpatialFocus.EFLazyLoading.Fody
 					bool isReadOnlyCollectionInterface = propertyDefinition.PropertyType.GetElementType().Resolve() ==
 						context.References.ReadOnlyCollectionInterface.Resolve();
 
-					// TODO: Generic parameter is class
 					if (!isReadOnlyCollectionType && !isReadOnlyCollectionInterface)
+					{
+						return null;
+					}
+
+					GenericInstanceType instance = (GenericInstanceType)propertyDefinition.PropertyType;
+					TypeDefinition? genericArgument = instance.GenericArguments.FirstOrDefault()?.Resolve();
+
+					if (genericArgument == null || !genericArgument.IsClass || genericArgument.IsEnum)
 					{
 						return null;
 					}

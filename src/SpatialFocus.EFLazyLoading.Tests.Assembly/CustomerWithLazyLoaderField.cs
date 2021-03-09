@@ -1,21 +1,24 @@
-﻿// <copyright file="Customer.cs" company="Spatial Focus GmbH">
+﻿// <copyright file="OtherCustomer.cs" company="Spatial Focus GmbH">
 // Copyright (c) Spatial Focus GmbH. All rights reserved.
 // </copyright>
 
 namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 {
+	using System;
 	using System.Collections.Generic;
 
-	public class Customer
+	public class CustomerWithLazyLoaderField
 	{
+#pragma warning disable 169
+		private readonly Action<object, string>? lazyLoader;
+#pragma warning restore 169
+
 		private readonly List<Order> orders = new();
 
-		public Customer(string name)
+		public CustomerWithLazyLoaderField(string name)
 		{
 			Name = name;
 		}
-
-		public int NumberOfOrders => this.orders.Count;
 
 		public virtual IReadOnlyCollection<Order> Orders => this.orders.AsReadOnly();
 
@@ -24,9 +27,5 @@ namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 		public string Name { get; protected set; }
 
 		public void AddOrder(Order order) => this.orders.Add(order);
-
-		public void ClearOrders() => this.orders.Clear();
-
-		public void RemoveOrder(Order order) => this.orders.Remove(order);
 	}
 }
