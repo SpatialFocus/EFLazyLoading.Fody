@@ -10,12 +10,12 @@ namespace SpatialFocus.EFLazyLoading.Tests
 	{
 		public static dynamic CreateInstance<T>(System.Reflection.Assembly assembly, params object[] parameters)
 		{
-			return Activator.CreateInstance(TestHelpers.CreateType<T>(assembly), parameters);
+			return Activator.CreateInstance(TestHelpers.CreateType<T>(assembly), parameters) ?? throw new InvalidOperationException();
 		}
 
 		private static Type CreateType<T>(System.Reflection.Assembly assembly)
 		{
-			return assembly.GetType(typeof(T).FullName ?? string.Empty);
+			return assembly.GetType(typeof(T).FullName ?? string.Empty) ?? throw new InvalidOperationException();
 		}
 	}
 }
