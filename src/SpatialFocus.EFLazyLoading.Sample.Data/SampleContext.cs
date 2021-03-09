@@ -12,13 +12,13 @@ namespace SpatialFocus.EFLazyLoading.Sample.Data
 		{
 		}
 
-		public DbSet<Branch> Branches { get; set; } = null!;
-
 		public DbSet<Customer> Customers { get; set; } = null!;
+
+		public DbSet<Order> Orders { get; set; } = null!;
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Customer>().HasMany(x => x.Branches).WithOne();
+			modelBuilder.Entity<Customer>().HasMany(x => x.Orders).WithOne();
 		}
 	}
 }

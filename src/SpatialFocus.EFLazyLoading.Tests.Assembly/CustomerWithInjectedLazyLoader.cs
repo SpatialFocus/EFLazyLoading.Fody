@@ -1,18 +1,21 @@
-﻿// <copyright file="Customer.cs" company="Spatial Focus GmbH">
+﻿// <copyright file="CustomerWithInjectedLazyLoader.cs" company="Spatial Focus GmbH">
 // Copyright (c) Spatial Focus GmbH. All rights reserved.
 // </copyright>
 
 namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 {
+	using System;
 	using System.Collections.Generic;
 
-	public class Customer
+	public class CustomerWithInjectedLazyLoader
 	{
+		private readonly Action<object, string>? lazyLoader;
 		private readonly List<Order> orders = new();
 
-		public Customer(string name)
+		public CustomerWithInjectedLazyLoader(string name, Action<object, string> lazyLoader)
 		{
 			Name = name;
+			this.lazyLoader = lazyLoader;
 		}
 
 		public int NumberOfOrders => this.orders.Count;
@@ -24,9 +27,5 @@ namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 		public string Name { get; protected set; }
 
 		public void AddOrder(Order order) => this.orders.Add(order);
-
-		public void ClearOrders() => this.orders.Clear();
-
-		public void RemoveOrder(Order order) => this.orders.Remove(order);
 	}
 }

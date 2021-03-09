@@ -17,29 +17,34 @@ namespace SpatialFocus.EFLazyLoading.Sample
 			var services = new ServiceCollection();
 			services.AddDbContext<SampleContext>(options =>
 			{
-				////options.LogTo(Console.WriteLine);
-
 				options.UseSqlite("DataSource=local.db").UseLazyLoadingProxies();
 			}, ServiceLifetime.Transient);
 
 			var serviceProvider = services.BuildServiceProvider();
 
 			Program.CreateDatabase(serviceProvider.CreateScope().ServiceProvider);
-			Program.AddCustomer(serviceProvider.CreateScope().ServiceProvider);
-			Program.GetCustomerAndAddBranches(serviceProvider.CreateScope().ServiceProvider);
-			Program.GetCustomerCount(serviceProvider.CreateScope().ServiceProvider);
-			Program.GetCustomerAndDeleteBranches(serviceProvider.CreateScope().ServiceProvider);
-			Program.GetCustomerCount(serviceProvider.CreateScope().ServiceProvider);
+
+			Program.AddCustomerAndOrder(serviceProvider.CreateScope().ServiceProvider);
+			Program.GetOrderCount(serviceProvider.CreateScope().ServiceProvider);
+
+			Program.GetCustomerAndAddOrder(serviceProvider.CreateScope().ServiceProvider);
+			Program.GetOrderCount(serviceProvider.CreateScope().ServiceProvider);
+
+			Program.GetCustomerAndRemoveOrder(serviceProvider.CreateScope().ServiceProvider);
+			Program.GetOrderCount(serviceProvider.CreateScope().ServiceProvider);
+
+			Program.GetCustomerAndClearOrders(serviceProvider.CreateScope().ServiceProvider);
+			Program.GetOrderCount(serviceProvider.CreateScope().ServiceProvider);
 		}
 
-		private static void AddCustomer(IServiceProvider serviceProvider)
+		private static void AddCustomerAndOrder(IServiceProvider serviceProvider)
 		{
 			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
 
-			Console.WriteLine("Add new customer and branch 1");
+			Console.WriteLine("Add new customer and order 1");
 
 			Customer customer = new Customer("Customer1");
-			customer.AddBranch(new Branch("Branch1"));
+			customer.AddOrder(new Order("Order 1", 10.99M));
 
 			context.Customers.Add(customer);
 			context.SaveChanges();
@@ -53,35 +58,51 @@ namespace SpatialFocus.EFLazyLoading.Sample
 			context.Database.EnsureCreated();
 		}
 
-		private static void GetCustomerAndAddBranches(IServiceProvider serviceProvider)
+		private static void GetCustomerAndAddOrder(IServiceProvider serviceProvider)
 		{
 			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
 
-			Console.WriteLine("Add branch 2 for existing customer");
+			Console.WriteLine("Add order 2 and order 3 to existing customer");
 
 			Customer customer = context.Customers.Single();
-			customer.AddBranch(new Branch("Branch2"));
+			customer.AddOrder(new Order("Order 2", 7.99M));
+			customer.AddOrder(new Order("Order 3", 14.99M));
 
 			context.SaveChanges();
 		}
 
-		private static void GetCustomerAndDeleteBranches(IServiceProvider serviceProvider)
+		private static void GetCustomerAndClearOrders(IServiceProvider serviceProvider)
 		{
 			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
 
+			Console.WriteLine("Clear orders of existing customer");
+
 			Customer customer = context.Customers.Single();
-			customer.DeleteBranches();
+			customer.ClearOrders();
 
 			context.SaveChanges();
 		}
 
-		private static void GetCustomerCount(IServiceProvider serviceProvider)
+		private static void GetCustomerAndRemoveOrder(IServiceProvider serviceProvider)
+		{
+			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
+
+			Console.WriteLine("Remove order 1 from existing customer");
+
+			Customer customer = context.Customers.Single();
+			Order order1 = context.Orders.Single(x => x.Name == "Order 1");
+			customer.RemoveOrder(order1);
+
+			context.SaveChanges();
+		}
+
+		private static void GetOrderCount(IServiceProvider serviceProvider)
 		{
 			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
 
 			Customer customer = context.Customers.Single();
 
-			Console.WriteLine($"Customer has {customer.BranchesCount} branches");
+			Console.WriteLine($" => Customer has {customer.NumberOfOrders} orders.");
 
 			context.SaveChanges();
 		}

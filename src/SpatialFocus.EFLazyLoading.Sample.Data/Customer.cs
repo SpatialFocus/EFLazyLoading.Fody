@@ -8,23 +8,25 @@ namespace SpatialFocus.EFLazyLoading.Sample.Data
 
 	public class Customer
 	{
-		private readonly List<Branch> branches = new();
+		private readonly List<Order> orders = new();
 
 		public Customer(string name)
 		{
 			Name = name;
 		}
 
-		public virtual IReadOnlyCollection<Branch> Branches => this.branches.AsReadOnly();
+		public int NumberOfOrders => this.orders.Count;
 
-		public int BranchesCount => this.branches.Count;
+		public virtual IReadOnlyCollection<Order> Orders => this.orders.AsReadOnly();
 
 		public int Id { get; protected set; }
 
 		public string Name { get; protected set; }
 
-		public void AddBranch(Branch branch) => this.branches.Add(branch);
+		public void AddOrder(Order order) => this.orders.Add(order);
 
-		public void DeleteBranches() => this.branches.Clear();
+		public void ClearOrders() => this.orders.Clear();
+
+		public void RemoveOrder(Order order) => this.orders.Remove(order);
 	}
 }

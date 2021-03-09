@@ -1,4 +1,4 @@
-﻿// <copyright file="Customer.cs" company="Spatial Focus GmbH">
+﻿// <copyright file="CustomerWithTagsAndOrders.cs" company="Spatial Focus GmbH">
 // Copyright (c) Spatial Focus GmbH. All rights reserved.
 // </copyright>
 
@@ -6,11 +6,12 @@ namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 {
 	using System.Collections.Generic;
 
-	public class Customer
+	public class CustomerWithTagsAndOrders
 	{
 		private readonly List<Order> orders = new();
+		private readonly List<Tag> tags = new();
 
-		public Customer(string name)
+		public CustomerWithTagsAndOrders(string name)
 		{
 			Name = name;
 		}
@@ -19,14 +20,14 @@ namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 
 		public virtual IReadOnlyCollection<Order> Orders => this.orders.AsReadOnly();
 
+		public virtual IReadOnlyCollection<Tag> Tags => this.tags.AsReadOnly();
+
 		public int Id { get; protected set; }
 
 		public string Name { get; protected set; }
 
 		public void AddOrder(Order order) => this.orders.Add(order);
 
-		public void ClearOrders() => this.orders.Clear();
-
-		public void RemoveOrder(Order order) => this.orders.Remove(order);
+		public void AddTag(Tag tag) => this.tags.Add(tag);
 	}
 }
