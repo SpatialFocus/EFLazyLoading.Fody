@@ -23,6 +23,9 @@ PM> Install-Package SpatialFocus.EFLazyLoading.Fody
 
 The `Install-Package Fody` is required since NuGet always defaults to the oldest, and most buggy, version of any dependency.
 
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSpatialFocus%2FEFLazyLoading.Fody.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSpatialFocus%2FEFLazyLoading.Fody?ref=badge_large)
+
 ----
 
 Made with :heart: by [Spatial Focus](https://spatial-focus.net/)
