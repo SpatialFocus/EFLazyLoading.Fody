@@ -7,12 +7,10 @@ namespace SpatialFocus.EFLazyLoading.Fody
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
-	using System.ComponentModel.Design;
 	using System.Linq;
 	using System.Runtime.CompilerServices;
 	using Mono.Cecil;
 	using Mono.Cecil.Rocks;
-
 
 	public class References
 	{
@@ -21,15 +19,15 @@ namespace SpatialFocus.EFLazyLoading.Fody
 			ModuleWeaver = moduleWeaver;
 		}
 
-		public TypeReference CompilerGeneratedAttributeType { get; set; }
+		public TypeReference CompilerGeneratedAttributeType { get; set; } = null!;
 
-		public TypeReference LazyLoaderType { get; set; }
+		public MethodReference LazyLoaderInvokeMethod { get; set; } = null!;
 
-		public MethodReference LazyLoaderInvokeMethod { get; set; }
+		public TypeReference LazyLoaderType { get; set; } = null!;
 
-		public TypeReference ReadOnlyCollectionInterface { get; set; }
+		public TypeReference ReadOnlyCollectionInterface { get; set; } = null!;
 
-		public TypeReference ReadOnlyCollectionType { get; set; }
+		public TypeReference ReadOnlyCollectionType { get; set; } = null!;
 
 		protected ModuleWeaver ModuleWeaver { get; }
 
@@ -50,7 +48,8 @@ namespace SpatialFocus.EFLazyLoading.Fody
 				.MakeGenericInstanceType(moduleWeaver.TypeSystem.ObjectDefinition, moduleWeaver.TypeSystem.StringReference);
 
 			MethodDefinition lazyLoaderInvokeMethod = references.LazyLoaderType.Resolve().Methods.Single(x => x.Name == "Invoke");
-			references.LazyLoaderInvokeMethod = moduleWeaver.ModuleDefinition.ImportReference(lazyLoaderInvokeMethod).MakeHostInstanceGeneric(moduleWeaver.TypeSystem.ObjectDefinition, moduleWeaver.TypeSystem.StringReference);
+			references.LazyLoaderInvokeMethod = moduleWeaver.ModuleDefinition.ImportReference(lazyLoaderInvokeMethod)
+				.MakeHostInstanceGeneric(moduleWeaver.TypeSystem.ObjectDefinition, moduleWeaver.TypeSystem.StringReference);
 
 			TypeDefinition readOnlyCollectionType = moduleWeaver.FindTypeDefinition(typeof(ReadOnlyCollection<>).Name);
 			references.ReadOnlyCollectionType = moduleWeaver.ModuleDefinition.ImportReference(readOnlyCollectionType);

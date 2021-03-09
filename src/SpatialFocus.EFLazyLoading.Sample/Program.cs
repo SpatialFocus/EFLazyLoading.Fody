@@ -5,7 +5,6 @@
 namespace SpatialFocus.EFLazyLoading.Sample
 {
 	using System;
-	using System.Diagnostics;
 	using System.Linq;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +17,7 @@ namespace SpatialFocus.EFLazyLoading.Sample
 			var services = new ServiceCollection();
 			services.AddDbContext<SampleContext>(options =>
 			{
-				//options.LogTo(Console.WriteLine);
+				////options.LogTo(Console.WriteLine);
 
 				options.UseSqlite("DataSource=local.db").UseLazyLoadingProxies();
 			}, ServiceLifetime.Transient);
@@ -66,23 +65,23 @@ namespace SpatialFocus.EFLazyLoading.Sample
 			context.SaveChanges();
 		}
 
-		private static void GetCustomerCount(IServiceProvider serviceProvider)
-		{
-			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
-
-			Customer customer = context.Customers.Single();
-
-			Console.WriteLine($"Customer has {customer.Branches.Count} branches");
-
-			context.SaveChanges();
-		}
-
 		private static void GetCustomerAndDeleteBranches(IServiceProvider serviceProvider)
 		{
 			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
 
 			Customer customer = context.Customers.Single();
 			customer.DeleteBranches();
+
+			context.SaveChanges();
+		}
+
+		private static void GetCustomerCount(IServiceProvider serviceProvider)
+		{
+			using SampleContext context = serviceProvider.GetRequiredService<SampleContext>();
+
+			Customer customer = context.Customers.Single();
+
+			Console.WriteLine($"Customer has {customer.BranchesCount} branches");
 
 			context.SaveChanges();
 		}

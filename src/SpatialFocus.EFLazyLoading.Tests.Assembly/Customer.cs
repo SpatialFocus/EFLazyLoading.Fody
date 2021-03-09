@@ -17,6 +17,8 @@ namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 
 		public virtual IReadOnlyCollection<Branch> Branches => this.branches.AsReadOnly();
 
+		public int BranchesCount => this.branches.Count;
+
 		public int Id { get; protected set; }
 
 		public string Name { get; protected set; }

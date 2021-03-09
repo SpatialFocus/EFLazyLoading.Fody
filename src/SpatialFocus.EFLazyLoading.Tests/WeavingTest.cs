@@ -5,6 +5,8 @@
 namespace SpatialFocus.EFLazyLoading.Tests
 {
 	using System;
+	using System.Collections.Generic;
+	using System.Linq;
 	using global::Fody;
 	using SpatialFocus.EFLazyLoading.Fody;
 	using SpatialFocus.EFLazyLoading.Tests.Assembly;
@@ -17,24 +19,21 @@ namespace SpatialFocus.EFLazyLoading.Tests
 
 		static WeavingTest()
 		{
-			ModuleWeaver weavingTask = new ModuleWeaver();
-
-			try
-			{
-				WeavingTest.TestResult =
-					weavingTask.ExecuteTestRun($"{typeof(Customer).Namespace}.dll", ignoreCodes: new[] { "0x80131869" });
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
+			WeavingTest.TestResult =
+				new ModuleWeaver().ExecuteTestRun($"{typeof(Customer).Namespace}.dll", ignoreCodes: new[] { "0x80131869" });
 		}
 
 		[Fact]
 		public void CanCreateInstance()
 		{
-			dynamic instance = TestHelpers.CreateInstance<Customer>(WeavingTest.TestResult.Assembly, "Test");
+			ICollection<Tuple<object, string>> lazyLoaderCalls = new List<Tuple<object, string>>();
+
+			dynamic instance =
+				TestHelpers.CreateInstance<Customer>(WeavingTest.TestResult.Assembly, "Customer1", new Action<object, string>((entity, property) => lazyLoaderCalls.Add(new Tuple<object, string>(entity, property))));
+			dynamic count = instance.BranchesCount;
+
+			Assert.True(lazyLoaderCalls.Count == 1);
+			Assert.Equal("Branches", lazyLoaderCalls.Single().Item2);
 		}
 	}
 }
