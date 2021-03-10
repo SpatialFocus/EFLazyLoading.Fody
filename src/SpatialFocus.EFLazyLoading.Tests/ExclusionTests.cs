@@ -118,5 +118,16 @@ namespace SpatialFocus.EFLazyLoading.Tests
 
 			Assert.Equal(1, lazyLoaderCalls.Count);
 		}
+
+		[Fact]
+		public void E08_CanNotCreateInstanceOfCustomerWithOnlyStrings()
+		{
+			ICollection<Tuple<object, string>> lazyLoaderCalls = new List<Tuple<object, string>>();
+
+			Assert.Throws<MissingMethodException>(() => _ = TestHelpers.CreateInstance<CustomerWithStrings>(ExclusionTests.TestResult.Assembly, "Customer1",
+				new Action<object, string>((entity, property) => lazyLoaderCalls.Add(new Tuple<object, string>(entity, property)))));
+
+			Assert.Equal(0, lazyLoaderCalls.Count);
+		}
 	}
 }

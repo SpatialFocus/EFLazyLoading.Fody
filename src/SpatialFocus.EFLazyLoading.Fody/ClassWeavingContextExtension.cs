@@ -33,7 +33,8 @@ namespace SpatialFocus.EFLazyLoading.Fody
 					GenericInstanceType instance = (GenericInstanceType)propertyDefinition.PropertyType;
 					TypeDefinition? genericArgument = instance.GenericArguments.FirstOrDefault()?.Resolve();
 
-					if (genericArgument == null || !genericArgument.IsClass || genericArgument.IsEnum)
+					if (genericArgument == null || !genericArgument.IsClass || genericArgument.FullName == typeof(string).FullName ||
+						genericArgument.IsEnum || genericArgument.IsValueType)
 					{
 						return null;
 					}
