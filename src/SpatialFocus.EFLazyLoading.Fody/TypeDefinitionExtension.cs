@@ -17,5 +17,10 @@ namespace SpatialFocus.EFLazyLoading.Fody
 
 			return type.Namespace;
 		}
+
+		public static bool IsString(this TypeDefinition type)
+		{
+			return type == type.Module.TypeSystem.String;
+		}
 	}
 }

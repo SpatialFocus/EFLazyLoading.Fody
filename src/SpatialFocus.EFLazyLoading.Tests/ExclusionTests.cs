@@ -74,7 +74,8 @@ namespace SpatialFocus.EFLazyLoading.Tests
 		{
 			ICollection<Tuple<object, string>> lazyLoaderCalls = new List<Tuple<object, string>>();
 
-			Assert.Throws<MissingMethodException>(() => _ = TestHelpers.CreateInstance<CustomerWithTags>(ExclusionTests.TestResult.Assembly, "Customer1",
+			Assert.Throws<MissingMethodException>(() => _ = TestHelpers.CreateInstance<CustomerWithTags>(ExclusionTests.TestResult.Assembly,
+				"Customer1",
 				new Action<object, string>((entity, property) => lazyLoaderCalls.Add(new Tuple<object, string>(entity, property)))));
 
 			Assert.Equal(0, lazyLoaderCalls.Count);
@@ -124,8 +125,21 @@ namespace SpatialFocus.EFLazyLoading.Tests
 		{
 			ICollection<Tuple<object, string>> lazyLoaderCalls = new List<Tuple<object, string>>();
 
-			Assert.Throws<MissingMethodException>(() => _ = TestHelpers.CreateInstance<CustomerWithStrings>(ExclusionTests.TestResult.Assembly, "Customer1",
-				new Action<object, string>((entity, property) => lazyLoaderCalls.Add(new Tuple<object, string>(entity, property)))));
+			Assert.Throws<MissingMethodException>(() =>
+				_ = TestHelpers.CreateInstance<CustomerWithStrings>(ExclusionTests.TestResult.Assembly, "Customer1",
+					new Action<object, string>((entity, property) => lazyLoaderCalls.Add(new Tuple<object, string>(entity, property)))));
+
+			Assert.Equal(0, lazyLoaderCalls.Count);
+		}
+
+		[Fact]
+		public void E09_CanNotCreateInstanceOfCustomerWithOnlyIntegers()
+		{
+			ICollection<Tuple<object, string>> lazyLoaderCalls = new List<Tuple<object, string>>();
+
+			Assert.Throws<MissingMethodException>(() =>
+				_ = TestHelpers.CreateInstance<CustomerWithIntegers>(ExclusionTests.TestResult.Assembly, "Customer1",
+					new Action<object, string>((entity, property) => lazyLoaderCalls.Add(new Tuple<object, string>(entity, property)))));
 
 			Assert.Equal(0, lazyLoaderCalls.Count);
 		}
