@@ -20,7 +20,10 @@ namespace SpatialFocus.EFLazyLoading.Fody
 					$"Add constructor overload for {context.TypeDefinition.Name}({string.Join(", ", constructor.Parameters.Select(x => $"{x.ParameterType.Name} {x.Name}"))})");
 
 				MethodDefinition method = new MethodDefinition(constructor.Name, constructor.Attributes,
-					context.TypeDefinition.Module.TypeSystem.Void);
+					context.TypeDefinition.Module.TypeSystem.Void)
+				{
+					IsFamily = true,
+				};
 
 				foreach (ParameterDefinition parameterDefinition in constructor.Parameters)
 				{
