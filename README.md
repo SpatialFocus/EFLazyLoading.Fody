@@ -49,83 +49,83 @@ Before code:
 ```csharp
 public class Customer
 {
-	private readonly List<Order> orders = new();
+    private readonly List<Order> orders = new();
 
-	public Customer(string name)
-	{
-		Name = name;
-	}
+    public Customer(string name)
+    {
+        Name = name;
+    }
 
-	public int NumberOfOrders => this.orders.Count;
+    public int NumberOfOrders => this.orders.Count;
 
-	public virtual IReadOnlyCollection<Order> Orders => this.orders.AsReadOnly();
+    public virtual IReadOnlyCollection<Order> Orders => this.orders.AsReadOnly();
 
-	public int Id { get; protected set; }
+    public int Id { get; protected set; }
 
-	public string Name { get; protected set; }
+    public string Name { get; protected set; }
 
-	public void AddOrder(Order order) => this.orders.Add(order);
+    public void AddOrder(Order order) => this.orders.Add(order);
 
-	public void ClearOrders() => this.orders.Clear();
+    public void ClearOrders() => this.orders.Clear();
 
-	public void RemoveOrder(Order order) => this.orders.Remove(order);
+    public void RemoveOrder(Order order) => this.orders.Remove(order);
 }
 ```
 
 What gets compiled
 
 ```csharp
-public class Customer
+public class CustomerWeaved
 {
-	private readonly Action<object, string>? lazyLoader;
-	private readonly List<Order> orders = new();
+    private readonly Action<object, string>? lazyLoader;
+    private readonly List<Order> orders = new();
 
-	public CustomerWeaved(string name)
-	{
-		Name = name;
-	}
+    public CustomerWeaved(string name)
+    {
+        Name = name;
+    }
 
-	// For every constructor a constructor overload with Action<object, string> lazyLoader will be added,
-	// and the original constructor will be called
-	// See https://docs.microsoft.com/en-us/ef/core/querying/related-data/lazy#lazy-loading-without-proxies
-	protected CustomerWeaved(string name, Action<object, string> lazyLoader) : this(name)
-	{
-		this.lazyLoader = lazyLoader;
-	}
+    // For every constructor a constructor overload with Action<object, string> lazyLoader will be added,
+    // and the original constructor will be called
+    // See https://docs.microsoft.com/en-us/ef/core/querying/related-data/lazy#lazy-loading-without-proxies
+    protected CustomerWeaved(string name, Action<object, string> lazyLoader) : this(name)
+    {
+        this.lazyLoader = lazyLoader;
+    }
 
-	public int NumberOfOrders
-	{
-		get
-		{
-			this.lazyLoader?.Invoke(this, "Orders");
-			return this.orders.Count;
-		}
-	}
+    public int NumberOfOrders
+    {
+        get
+        {
+            this.lazyLoader?.Invoke(this, "Orders");
+            return this.orders.Count;
+        }
+    }
 
-	// Access via navigation property will trigger default lazy loading behaviour
-	public virtual IReadOnlyCollection<Order> Orders => this.orders.AsReadOnly();
+    // Access via navigation property will trigger default lazy loading behaviour
+    public virtual IReadOnlyCollection<Order> Orders => this.orders.AsReadOnly();
 
-	public int Id { get; protected set; }
+    public int Id { get; protected set; }
 
-	public string Name { get; protected set; }
+    public string Name { get; protected set; }
 
-	public void AddOrder(Order order)
-	{
-		this.lazyLoader?.Invoke(this, "Orders");
-		this.orders.Add(order);
-	}
+    public void AddOrder(Order order)
+    {
+        this.lazyLoader?.Invoke(this, "Orders");
+        this.orders.Add(order);
+    }
 
-	public void ClearOrders()
-	{
-		this.lazyLoader?.Invoke(this, "Orders");
-		this.orders.Clear();
-	}
+    public void ClearOrders()
+    {
+        this.lazyLoader?.Invoke(this, "Orders");
+        this.orders.Clear();
+    }
 
-	public void RemoveOrder(Order order)
-	{
-		this.lazyLoader?.Invoke(this, "Orders");
-		this.orders.Remove(order);
-	}
+    public void RemoveOrder(Order order)
+    {
+        this.lazyLoader?.Invoke(this, "Orders");
+        this.orders.Remove(order);
+    }
 }
 ```
 
