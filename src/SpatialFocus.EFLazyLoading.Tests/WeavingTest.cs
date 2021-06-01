@@ -91,5 +91,21 @@ namespace SpatialFocus.EFLazyLoading.Tests
 			Assert.Equal(1, lazyLoaderCalls.Count);
 			Assert.Equal("Orders", lazyLoaderCalls.Single().Item2);
 		}
+
+		[Fact]
+		public void T06_AccessNestedClass()
+		{
+			ICollection<Tuple<object, string>> lazyLoaderCalls = new List<Tuple<object, string>>();
+
+			dynamic instance = TestHelpers.CreateInstance<Customer>(WeavingTest.TestResult.Assembly, "Customer1",
+				new Action<object, string>((entity, property) => lazyLoaderCalls.Add(new Tuple<object, string>(entity, property))));
+
+			dynamic nested = TestHelpers.CreateInstance<Customer.Nested>(WeavingTest.TestResult.Assembly, (object)instance);
+
+			_ = nested.Orders;
+
+			Assert.Equal(1, lazyLoaderCalls.Count);
+			Assert.Equal("Orders", lazyLoaderCalls.Single().Item2);
+		}
 	}
 }

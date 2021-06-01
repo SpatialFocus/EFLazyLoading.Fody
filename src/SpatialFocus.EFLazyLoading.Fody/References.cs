@@ -29,6 +29,8 @@ namespace SpatialFocus.EFLazyLoading.Fody
 
 		public TypeReference ReadOnlyCollectionType { get; set; } = null!;
 
+		public MethodReference ExtensionLoadMethod { get; set; } = null!;
+
 		protected ModuleWeaver ModuleWeaver { get; }
 
 		public static References Init(ModuleWeaver moduleWeaver)

@@ -20,10 +20,7 @@ namespace SpatialFocus.EFLazyLoading.Fody
 					$"Add constructor overload for {context.TypeDefinition.Name}({string.Join(", ", constructor.Parameters.Select(x => $"{x.ParameterType.Name} {x.Name}"))})");
 
 				MethodDefinition method = new MethodDefinition(constructor.Name, constructor.Attributes,
-					context.TypeDefinition.Module.TypeSystem.Void)
-				{
-					IsFamily = true,
-				};
+					context.TypeDefinition.Module.TypeSystem.Void) { IsFamily = true, };
 
 				foreach (ParameterDefinition parameterDefinition in constructor.Parameters)
 				{
@@ -74,7 +71,7 @@ namespace SpatialFocus.EFLazyLoading.Fody
 
 			IEnumerable<MethodDefinition> methods = context.ClassWeavingContext.TypeDefinition.Methods.Where(methodDefinition =>
 				!methodDefinition.IsSpecialName && !methodDefinition.IsGetter && !methodDefinition.IsSetter &&
-					!methodDefinition.IsConstructor && methodDefinition.Body.Instructions.Any(x => x.Operand == context.FieldDefinition));
+				!methodDefinition.IsConstructor && methodDefinition.Body.Instructions.Any(x => x.Operand == context.FieldDefinition));
 
 			foreach (MethodDefinition methodDefinition in getterAndSetterMethods.Union(methods))
 			{
@@ -93,6 +90,38 @@ namespace SpatialFocus.EFLazyLoading.Fody
 					.Append(x => x.Create(OpCodes.Brtrue_S, loadInstructionStart.CurrentInstruction))
 					.Append(x => x.Create(OpCodes.Pop))
 					.Append(x => x.Create(OpCodes.Br_S, loadInstructionEnd.CurrentInstruction!.Next));
+			}
+
+			MethodReference load = context.ClassWeavingContext.References.ExtensionLoadMethod.MakeGeneric(context.ClassWeavingContext
+				.TypeDefinition);
+
+			foreach (TypeDefinition nestedTypeDefinition in context.ClassWeavingContext.TypeDefinition.NestedTypes)
+			{
+				IEnumerable<MethodDefinition> nestedGetterAndSetterMethods = nestedTypeDefinition.Properties
+					.Where(propertyDefinition => propertyDefinition != context.PropertyDefinition)
+					.SelectMany(propertyDefinition => new[] { propertyDefinition.SetMethod, propertyDefinition.GetMethod })
+					.Where(methodDefinition => methodDefinition != null &&
+						methodDefinition.Body.Instructions.Any(body => body.Operand == context.FieldDefinition));
+
+				IEnumerable<MethodDefinition> nestedMethods = nestedTypeDefinition.Methods.Where(methodDefinition =>
+					!methodDefinition.IsSpecialName && !methodDefinition.IsGetter && !methodDefinition.IsSetter &&
+					!methodDefinition.IsConstructor && methodDefinition.Body.Instructions.Any(x => x.Operand == context.FieldDefinition));
+
+				foreach (MethodDefinition methodDefinition in nestedGetterAndSetterMethods.Union(nestedMethods))
+				{
+					ILProcessorContext processor = methodDefinition.Body.GetILProcessor().Start();
+
+					foreach (Instruction instruction in methodDefinition.Body.Instructions.ToList()
+						.Where(x => x.Operand == context.FieldDefinition))
+					{
+						processor.CurrentInstruction = instruction.Previous;
+
+						processor.Append(x => x.Create(OpCodes.Dup))
+							.Append(x => x.Create(OpCodes.Ldfld, context.ClassWeavingContext.LazyLoaderField))
+							.Append(x => x.Create(OpCodes.Ldstr, context.PropertyDefinition.Name))
+							.Append(x => x.Create(OpCodes.Call, load));
+					}
+				}
 			}
 		}
 	}

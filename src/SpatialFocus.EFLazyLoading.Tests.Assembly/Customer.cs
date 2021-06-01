@@ -28,5 +28,17 @@ namespace SpatialFocus.EFLazyLoading.Tests.Assembly
 		public void ClearOrders() => this.orders.Clear();
 
 		public void RemoveOrder(Order order) => this.orders.Remove(order);
+
+		public class Nested
+		{
+			private readonly Customer customer;
+
+			public Nested(Customer customer)
+			{
+				this.customer = customer;
+			}
+
+			public virtual IReadOnlyCollection<Order> Orders => this.customer.orders.AsReadOnly();
+		}
 	}
 }

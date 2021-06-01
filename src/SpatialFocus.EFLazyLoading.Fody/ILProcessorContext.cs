@@ -16,7 +16,7 @@ namespace SpatialFocus.EFLazyLoading.Fody
 			CurrentInstruction = currentInstruction;
 		}
 
-		public Instruction? CurrentInstruction { get; }
+		public Instruction? CurrentInstruction { get; set; }
 
 		public ILProcessor Processor { get; }
 
