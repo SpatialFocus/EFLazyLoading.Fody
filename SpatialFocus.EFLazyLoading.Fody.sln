@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.EFLazyLoading.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialFocus.EFLazyLoading.Tests.Assembly", "src\SpatialFocus.EFLazyLoading.Tests.Assembly\SpatialFocus.EFLazyLoading.Tests.Assembly.csproj", "{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialFocus.EFLazyLoading.SmokeTest", "src\SpatialFocus.EFLazyLoading.SmokeTest\SpatialFocus.EFLazyLoading.SmokeTest.csproj", "{0B0B4A9C-AE86-4370-8E3B-4D9784E9F9F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B0B4A9C-AE86-4370-8E3B-4D9784E9F9F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B0B4A9C-AE86-4370-8E3B-4D9784E9F9F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B0B4A9C-AE86-4370-8E3B-4D9784E9F9F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B0B4A9C-AE86-4370-8E3B-4D9784E9F9F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{2239D06D-D6DA-4ABD-8200-12F8568C8029} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
 		{5F57DFB7-3484-4F06-8933-3CA798A2F772} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
 		{E730D1EB-8278-4FAE-BF9A-AC1BD1672339} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
+		{0B0B4A9C-AE86-4370-8E3B-4D9784E9F9F4} = {7B20E4F7-309B-407B-B555-4FF5BCB42317}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77bbd221-c189-4fdc-8125-5773860799c0}

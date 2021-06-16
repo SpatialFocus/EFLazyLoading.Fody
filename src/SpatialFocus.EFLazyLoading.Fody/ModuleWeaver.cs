@@ -57,7 +57,7 @@ namespace SpatialFocus.EFLazyLoading.Fody
 				TypeAttributes.AnsiClass | TypeAttributes.Sealed | TypeAttributes.BeforeFieldInit, TypeSystem.ObjectReference);
 
 			MethodDefinition loadMethodDefinition = new MethodDefinition("Load",
-				MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Static, TypeSystem.VoidDefinition);
+				MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Static, TypeSystem.VoidReference);
 
 			GenericParameter genericParameter = new GenericParameter(loadMethodDefinition) { Name = "TEntity" };
 			loadMethodDefinition.ReturnType = genericParameter;
@@ -66,11 +66,9 @@ namespace SpatialFocus.EFLazyLoading.Fody
 
 			loadMethodDefinition.Parameters.Add(new ParameterDefinition("instance", ParameterAttributes.None, genericParameter));
 			loadMethodDefinition.Parameters.Add(new ParameterDefinition("loader", ParameterAttributes.None, references.LazyLoaderType));
-			loadMethodDefinition.Parameters.Add(new ParameterDefinition("name", ParameterAttributes.None, TypeSystem.StringDefinition));
+			loadMethodDefinition.Parameters.Add(new ParameterDefinition("name", ParameterAttributes.None, TypeSystem.StringReference));
 
-			var loadInstructionStart = loadMethodDefinition.Body.GetILProcessor()
-				.Start()
-				.Append(x => x.Create(OpCodes.Ldarg_1));
+			var loadInstructionStart = loadMethodDefinition.Body.GetILProcessor().Start().Append(x => x.Create(OpCodes.Ldarg_1));
 
 			var loadInstructionEnd = loadInstructionStart.Append(x => x.Create(OpCodes.Ldarg_1))
 				.Append(x => x.Create(OpCodes.Ldarg_0))
@@ -78,8 +76,7 @@ namespace SpatialFocus.EFLazyLoading.Fody
 				.Append(x => x.Create(OpCodes.Ldarg_2))
 				.Append(x => x.Create(OpCodes.Callvirt, references.LazyLoaderInvokeMethod));
 
-			loadInstructionEnd.Append(x => x.Create(OpCodes.Ldarg_0))
-				.Append(x => x.Create(OpCodes.Ret));
+			loadInstructionEnd.Append(x => x.Create(OpCodes.Ldarg_0)).Append(x => x.Create(OpCodes.Ret));
 
 			loadInstructionStart.Append(x => x.Create(OpCodes.Brtrue_S, loadInstructionStart.CurrentInstruction!.Next))
 				.Append(x => x.Create(OpCodes.Br_S, loadInstructionEnd.CurrentInstruction!.Next));

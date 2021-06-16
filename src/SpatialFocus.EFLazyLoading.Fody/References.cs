@@ -21,6 +21,8 @@ namespace SpatialFocus.EFLazyLoading.Fody
 
 		public TypeReference CompilerGeneratedAttributeType { get; set; } = null!;
 
+		public MethodReference ExtensionLoadMethod { get; set; } = null!;
+
 		public MethodReference LazyLoaderInvokeMethod { get; set; } = null!;
 
 		public TypeReference LazyLoaderType { get; set; } = null!;
@@ -28,8 +30,6 @@ namespace SpatialFocus.EFLazyLoading.Fody
 		public TypeReference ReadOnlyCollectionInterface { get; set; } = null!;
 
 		public TypeReference ReadOnlyCollectionType { get; set; } = null!;
-
-		public MethodReference ExtensionLoadMethod { get; set; } = null!;
 
 		protected ModuleWeaver ModuleWeaver { get; }
 
@@ -47,11 +47,11 @@ namespace SpatialFocus.EFLazyLoading.Fody
 
 			TypeDefinition lazyLoaderType = moduleWeaver.FindTypeDefinition(typeof(Action<,>).Name);
 			references.LazyLoaderType = moduleWeaver.ModuleDefinition.ImportReference(lazyLoaderType)
-				.MakeGenericInstanceType(moduleWeaver.TypeSystem.ObjectDefinition, moduleWeaver.TypeSystem.StringReference);
+				.MakeGenericInstanceType(moduleWeaver.TypeSystem.ObjectReference, moduleWeaver.TypeSystem.StringReference);
 
 			MethodDefinition lazyLoaderInvokeMethod = references.LazyLoaderType.Resolve().Methods.Single(x => x.Name == "Invoke");
 			references.LazyLoaderInvokeMethod = moduleWeaver.ModuleDefinition.ImportReference(lazyLoaderInvokeMethod)
-				.MakeHostInstanceGeneric(moduleWeaver.TypeSystem.ObjectDefinition, moduleWeaver.TypeSystem.StringReference);
+				.MakeHostInstanceGeneric(moduleWeaver.TypeSystem.ObjectReference, moduleWeaver.TypeSystem.StringReference);
 
 			TypeDefinition readOnlyCollectionType = moduleWeaver.FindTypeDefinition(typeof(ReadOnlyCollection<>).Name);
 			references.ReadOnlyCollectionType = moduleWeaver.ModuleDefinition.ImportReference(readOnlyCollectionType);
